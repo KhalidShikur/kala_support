@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\WorkspaceController;
 
 Route::get('/me', function (Request $request) {
     return $request->user();
@@ -14,3 +15,7 @@ Route::get('hello', function (Request $request) {
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+Route::post('workspaces', [WorkspaceController::class, 'create'])->middleware('auth:sanctum');
+
+Route::post('workspaces/{workspace}/add-user', [WorkspaceController::class, 'addUser'])->middleware('auth:sanctum');
