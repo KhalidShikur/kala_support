@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\WorkspaceController;
+use App\Models\Workspace;
 
 Route::get('/me', function (Request $request) {
     return $request->user();

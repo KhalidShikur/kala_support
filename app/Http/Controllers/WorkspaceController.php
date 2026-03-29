@@ -18,4 +18,20 @@ class WorkspaceController extends Controller
 
         return response()->json($workspace, 201);
     }
+
+    public function addUser(Request $request, Workspace $workspace) {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'role' => 'required|in:admin,agent'
+        ]);
+
+        if($request->user()->id !== $workspace->owner_id) {
+            return response()->json(['message'=>'Forbidden!'], 403);
+        }
+
+        $workspace->users()->syncWithoutDetaching([
+            $request->user_id => ['role' => $request->role]
+        ]);
+        return response()->json(['message'=>'User added!']);
+    }
 }
