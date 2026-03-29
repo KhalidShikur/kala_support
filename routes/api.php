@@ -12,4 +12,5 @@ Route::get('hello', function (Request $request) {
     return response()->json(["message"=>"Excellent"]);
 });
 
-Route::post("register", [AuthController::class, 'register']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
