@@ -34,4 +34,12 @@ class WorkspaceController extends Controller
         ]);
         return response()->json(['message'=>'User added!']);
     }
+
+    public function getAllUsers(Request $request, Workspace $workspace) {
+        if($request->user()->id !== $workspace->owner_id) {
+            return response()->json(['message'=>'Forbidden!'], 403);
+        }
+
+        return response()->json($workspace->users()->get());
+    }
 }

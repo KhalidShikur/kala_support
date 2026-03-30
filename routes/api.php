@@ -19,4 +19,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 Route::post('workspaces', [WorkspaceController::class, 'create'])->middleware('auth:sanctum');
 
-Route::post('workspaces/{workspace}/add-user', [WorkspaceController::class, 'addUser'])->middleware('auth:sanctum');
+Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
+    Route::post('workspaces/{workspace}/add-user', [WorkspaceController::class, 'addUser']);
+    Route::get('workspaces/{workspace}/users', [WorkspaceController::class, 'getAllUsers']);
+});
