@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('workspace_id')->constrained('workspaces', 'id')->onDelete('cascade');
+            $table->text('message');
+            $table->enum('sender_type', ['customer', 'agent']);
             $table->timestamps();
         });
     }

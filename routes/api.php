@@ -3,7 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BotController;
 use App\Http\Controllers\WorkspaceController;
+use App\Http\Controllers\WebhookController;
 use App\Models\Workspace;
 
 Route::get('/me', function (Request $request) {
@@ -22,4 +24,7 @@ Route::post('workspaces', [WorkspaceController::class, 'create'])->middleware('a
 Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
     Route::post('workspaces/{workspace}/add-user', [WorkspaceController::class, 'addUser']);
     Route::get('workspaces/{workspace}/users', [WorkspaceController::class, 'getAllUsers']);
+    Route::post('workspaces/{workspace}/bot', [BotController::class, 'create']);
 });
+
+Route::post('webhooks/telegram/{bot}', [WebhookController::class, 'handle']);

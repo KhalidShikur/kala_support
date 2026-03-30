@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bots', function (Blueprint $table) {
+        Schema::create('conversations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('workspace_id')->constrained('workspaces', 'id')->onDelete('cascade');
-            $table->string('bot_name');
-            $table->string('bot_username');
-            $table->string('bot_token');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bots');
+        Schema::dropIfExists('conversations');
     }
 };
