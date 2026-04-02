@@ -2,9 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+
+#[Fillable(['workspace_id', 'telegram_id', 'username', 'name'])]
 
 class Customer extends Model
 {
-    //
+    public function workspace() {
+        return $this->belongsTo(Workspace::class, 'workspace_id');
+    }
 }
