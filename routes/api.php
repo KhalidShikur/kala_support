@@ -7,6 +7,7 @@ use App\Http\Controllers\BotController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\WebhookController;
 use App\Models\Workspace;
+use App\Jobs\ProcessMessage;
 
 Route::get('/me', function (Request $request) {
     return $request->user();
@@ -28,3 +29,9 @@ Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
 });
 
 Route::post('webhooks/telegram/{bot}', [WebhookController::class, 'handle']);
+
+
+Route::get('/send-job', function () {
+    ProcessMessage::dispatch('Test message');
+    return 'Job dispatched!';
+});

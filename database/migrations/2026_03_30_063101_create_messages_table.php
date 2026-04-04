@@ -14,9 +14,12 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->foreignId('conversation_id')->constrained('conversations', 'id')->onDelete('cascade');
+            $table->string('message_id');
             $table->text('message');
             $table->enum('sender_type', ['customer', 'agent']);
             $table->timestamps();
+
+            $table->unique(['conversation_id', 'message_id']);
         });
     }
 
