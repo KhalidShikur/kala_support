@@ -20,4 +20,8 @@ class Conversation extends Model
     public function bot() {
         return $this->belongsTo(Bot::class, 'bot_id');
     }
+
+    public function messages() {
+        return $this->hasMany(Message::class);
+    }
 }

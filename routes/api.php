@@ -4,8 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BotController;
+use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\MessageController;
 use App\Models\Workspace;
 use App\Jobs\ProcessMessage;
 
@@ -26,12 +28,18 @@ Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
     Route::post('workspaces/{workspace}/add-user', [WorkspaceController::class, 'addUser']);
     Route::get('workspaces/{workspace}/users', [WorkspaceController::class, 'getAllUsers']);
     Route::post('workspaces/{workspace}/bot', [BotController::class, 'create']);
+
+    Route::get('workspaces/{workspace}/conversations', [ConversationController::class, 'getAllConversations']);
+    Route::get('workspaces/{workspace}/conversations/{conversation}', [ConversationController::class, 'getConversation']);
+
+    Route::get('conversations/{conversation}/messages', [MessageController::class, 'getAllMessages']);
 });
 
 Route::post('webhooks/telegram/{bot}', [WebhookController::class, 'handle']);
 
 
-Route::get('/send-job', function () {
-    ProcessMessage::dispatch('Test message');
-    return 'Job dispatched!';
-});
+// Route::get('/send-job', function () {
+//     ProcessMessage::dispatch('Test message');
+//     return 'Job dispatched!';
+// });
+
