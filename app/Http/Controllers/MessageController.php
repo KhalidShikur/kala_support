@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conversation;
+use App\Models\Customer;
 use App\Models\Message;
 use App\Models\Workspace;
 use Illuminate\Http\Request;
@@ -37,6 +38,13 @@ class MessageController extends Controller
         $count = Message::whereHas('conversation', function ($q) use ($workspaceID) {
             $q->where('workspace_id', $workspaceID);
         })->count();
+
+        return response()->json(['count' => $count]);
+    }
+
+    public function countCustomers (Workspace $workspace) {
+        $workspaceID = $workspace->id;
+        $count = Customer::where('workspace_id', $workspaceID)->count();
 
         return response()->json(['count' => $count]);
     }
