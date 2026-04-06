@@ -31,4 +31,13 @@ class MessageController extends Controller
 
         return response()->json(['message' => 'message sent successfully!']);
     }
+
+    public function countMessages (Workspace $workspace) {
+        $workspaceID = $workspace->id;
+        $count = Message::whereHas('conversation', function ($q) use ($workspaceID) {
+            $q->where('workspace_id', $workspaceID);
+        })->count();
+
+        return response()->json(['count' => $count]);
+    }
 }
