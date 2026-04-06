@@ -38,6 +38,7 @@ Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
     Route::get('workspaces/{workspace}/analytics/messages-count', [MessageController::class, 'countMessages']);
     Route::get('workspaces/{workspace}/analytics/active-customers', [MessageController::class, 'countCustomers']);
 
+    Route::get('conversations/{conversation}/analytics/response-time', [MessageController::class, 'avgResponseTime']);
 });
 
 Route::post('webhooks/telegram/{bot}', [WebhookController::class, 'handle']);

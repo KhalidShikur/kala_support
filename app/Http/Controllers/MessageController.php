@@ -48,4 +48,27 @@ class MessageController extends Controller
 
         return response()->json(['count' => $count]);
     }
+
+    public function avgResponseTime (Conversation $conversation) {
+        $messages = $conversation->messages->sortBy('created_at');
+
+        $customerMessage = null;
+        $agentReply = null;
+
+        foreach ($messages as $msg) {
+            if ($msg->sender_type === 'customer' && !$customerMessage) {
+                $customerMessage = $msg;
+            }
+
+            if ($msg->sender_type === 'agent' && $customerMessage) {
+                $agentReply = $msg;
+                break;
+            }
+        }
+
+        $responseTime = ($customerMessage && $agentReply) ? 
+        $agentReply->created_at->diffInSeconds($customerMessage->created_at) : null;
+
+        return response()->json(['response_time' => $responseTime]);
+    }
 }
