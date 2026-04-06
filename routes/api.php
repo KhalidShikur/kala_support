@@ -9,7 +9,6 @@ use App\Http\Controllers\WorkspaceController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\MessageController;
 use App\Models\Workspace;
-use App\Jobs\ProcessMessage;
 
 Route::get('/me', function (Request $request) {
     return $request->user();
@@ -33,6 +32,8 @@ Route::middleware(['auth:sanctum, WorkspaceMiddleware'])->group(function () {
     Route::get('workspaces/{workspace}/conversations/{conversation}', [ConversationController::class, 'getConversation']);
 
     Route::get('conversations/{conversation}/messages', [MessageController::class, 'getAllMessages']);
+
+    Route::post('conversations/{conversation}/messages/send', [MessageController::class, 'sendMessage']);
 });
 
 Route::post('webhooks/telegram/{bot}', [WebhookController::class, 'handle']);
